@@ -4,22 +4,32 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b59b05db-1d8b-4337-a3fd-452731bbb33c" name="Changes" comment="" />
+    <list default="true" id="b59b05db-1d8b-4337-a3fd-452731bbb33c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/RacePredictorGpLogo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/layouts/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/layouts/index.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings">
-    <execution />
+  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+    <execution>
+      <interpreter composer="composer" />
+    </execution>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="CSS File" />
+        <option value="HTML File" />
+        <option value="JavaScript File" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpDebugGeneral" listening_started="true" />
   <component name="ProjectColorInfo">{
@@ -37,6 +47,7 @@
     &quot;JavaScript Debug.Unnamed.executor&quot;: &quot;Run&quot;,
     &quot;JavaScript Debug.index.html.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/SamueLL/Documents/Projects/WebDevelopment/RacePredictorGP&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
@@ -45,7 +56,13 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;SQL Resolution Scopes&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
+    ]
   }
 }</component>
   <component name="RecentsManager">
@@ -78,6 +95,19 @@
       <option name="presentableId" value="Default" />
       <updated>1729406368916</updated>
       <workItem from="1729406369952" duration="11414000" />
+      <workItem from="1729508686219" duration="30000" />
+      <workItem from="1729584892893" duration="111000" />
+      <workItem from="1729602492909" duration="23000" />
+      <workItem from="1731994943566" duration="49000" />
+      <workItem from="1732011228979" duration="635000" />
+      <workItem from="1732114932674" duration="1198000" />
+      <workItem from="1732427911975" duration="270000" />
+      <workItem from="1732430324960" duration="125000" />
+      <workItem from="1733211725704" duration="115000" />
+      <workItem from="1733337499960" duration="5024000" />
+      <workItem from="1733345183571" duration="442000" />
+      <workItem from="1733345658359" duration="3225000" />
+      <workItem from="1733350138571" duration="690000" />
     </task>
     <servers />
   </component>
