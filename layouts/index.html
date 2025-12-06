@@ -3,11 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="../assets/css/style.css">
     <title>RacePredictorGP</title>
 
 </head>
 <body>
+    <nav class="navbar navbar-expand-md">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">RacePredictorGP</a>
 
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navmenu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a href="predictions.html" class="nav-link">Predictions</a>
+                    </li>
+                    <li class="nav-item">
+                    <a href="leaderboard.html" class="nav-link">Leaderboards</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <section class="main-section">
+        <div class="container-lg">
+            <h1 class="text-center">Welcome to RacePredictorGP</h1>
+            <img src="https://wallpapercave.com/wp/wp15102053.webp" alt="" class="img-fluid">
+        </div>
+    </section>
+
+    <section>
+        <div class="container p-5">
+            <div class="card bg-dark text-light">
+                <div class="card-body text-center">
+                    <h3>What, Who, Why?</h3>
+                    <p>
+                        RacePredictorGP is created for MotoGP fans who want to take their race-day experience to a new level.
+                        Instead of only watching the races, you can feel the excitement and tension of the track by trying to
+                        predict the top 3 riders for every Sprint and every main Race. This transforms the entire weekend into
+                        a fun and competitive challenge that makes you more connected with the sport.
+                    </p>
+                    <p>
+                        The goal of RacePredictorGP is simple: make MotoGP more interactive, more exciting, and more engaging.
+                        Whether you watch casually or you follow every session of every weekend, predicting race results brings
+                        you closer to the strategy, performance, and unpredictability of real MotoGP.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="p-5 bg-dark">
+        <div class="container">
+            <div class="row text-center g-4">
+                <div class="col-md">
+                    <div class="card bg-white text-dark h-100">
+                        <div class="card-body text-center">
+                            <h3 class="card-title mb-3">
+                                Predictions
+                            </h3>
+                            <p>
+                                Predict the top 3 riders for every Sprint and Race.
+                            </p>
+                            <p>
+                                Sprint scoring: 12 / 9 / 7 points
+                            </p>
+                            <p>
+                                Race scoring: 25 / 20 / 16 points
+                            </p>
+                            <p>
+                                Earn points only for correctly guessed positions and track your accuracy
+                                throughout the whole season.
+                            </p>
+
+                            <a href="predictions.html" class="btn btn-color">play</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md">
+                    <div class="card bg-white text-dark h-100">
+                        <div class="card-body text-center">
+                            <h3 class="card-title mb-3">
+                                Leaderboard
+                            </h3>
+                            <p>
+                                See your total score for the season, compare your rank with other players,
+                                and challenge your friends.
+                            </p>
+                            <p>
+
+                                The platform is free for now, but in the future the top 3 players on the
+                                leaderboard will earn real rewards — including MotoGP tickets or merchandise.
+                            </p>
+                            <a href="leaderboard.html" class="btn btn-color">visit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
