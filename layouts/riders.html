@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../assets/css/riders.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <title>Riders Manager</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-md">
+    <div class="container">
+        <a href="index.html" class="navbar-brand">RacePredictorGP</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navmenu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="predictions.html" class="nav-link">Predictions</a>
+                </li>
+                <li class="nav-item">
+                    <a href="leaderboard.html" class="nav-link">Leaderboards</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container">
+
+    <h1>Riders Manager</h1>
+
+    <div class="form-box">
+        <input id="rider-number" type="number" placeholder="Rider number">
+        <input id="rider-name" type="text" placeholder="Rider name">
+        <button onclick="addRider()">Add Rider</button>
+    </div>
+
+    <section>
+        <h2 class="mx-5 mt-4">Rider List</h2>
+
+        <table class="table mx-5 table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Number</th>
+                <th scope="col">Name</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+
+            <tbody id="riders-table" class="table-group-divider"></tbody>
+        </table>
+    </section>
+</div>
+
+<script src="../assets/js/riders.js"></script>
+</body>
+</html>
