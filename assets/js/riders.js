@@ -11,12 +11,12 @@ async function loadRiders() {
     riders.forEach(r => {
         table.innerHTML += `
             <tr>
-                <td>${r.rider_id}</td>
+                <td>${r.id}</td>
                 <td>${r.number}</td>
                 <td>${r.name}</td>
                 <td>
-                    <button class="action-btn edit" onclick="editRider(${r.rider_id}, ${r.number}, '${r.name}')">Edit</button>
-                    <button class="action-btn delete" onclick="deleteRider(${r.rider_id})">Delete</button>
+                    <button class="action-btn edit" onclick="editRider(${r.id}, ${r.number}, '${r.name}')">Edit</button>
+                    <button class="action-btn delete" onclick="deleteRider(${r.id})">Delete</button>
                 </td>
             </tr>
         `;

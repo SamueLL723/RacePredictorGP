@@ -13,22 +13,35 @@ app.post("/riders", async (req, res) => {
     try {
         const { number, name } = req.body;
 
-        const newRider = await pool.query(
-            "INSERT INTO rider (number, name) VALUES ($1, $2) RETURNING *",
+        if (!number || !name) {
+            return res.status(400).json({
+               error: "Number and name are required"
+            });
+        }
+
+        const [result] = await pool.query(
+            "INSERT INTO riders (number, name) VALUES (?, ?)",
             [number, name]
         );
-        res.json(newRider.rows[0]);
+
+        res.status(201).json({
+            id: result.insertId,
+            number,
+            name
+        });
     } catch (err) {
         console.error(err.message);
-        res.status(500).json({ error: "Server error" });
+        res.status(500).json({
+            error: "Server error"
+        });
     }
 });
 
 // GET ALL riders
 app.get("/riders", async (req, res) => {
     try {
-        const allRiders = await pool.query("SELECT * FROM rider ORDER BY number");
-        res.json(allRiders.rows);
+        const [rows] = await pool.query("SELECT * FROM riders ORDER BY number");
+        res.json(rows);
     } catch (err) {
         console.error(err.message);
         res.status(500).json({ error: "Server error" });
@@ -38,12 +51,19 @@ app.get("/riders", async (req, res) => {
 // GET ONE rider
 app.get("/riders/:id", async (req, res) => {
     try {
-        const { id } = req.params; // rider_id
-        const rider = await pool.query(
-            "SELECT * FROM rider WHERE rider_id = $1",
-            [id]
+        const riderId = req.params.id; // rider_id
+        const [rows] = await pool.query(
+            "SELECT * FROM riders WHERE id = ?",
+            [riderId]
         );
-        res.json(rider.rows[0]);   // ak neexistuje, bude null
+
+        if (rows.length === 0) {
+            return res.status(404).json({
+                error: "Rider not found"
+            });
+        }
+
+        res.json(rows[0]);
     } catch (err) {
         console.error(err.message);
         res.status(500).json({ error: "Server error" });
@@ -53,35 +73,63 @@ app.get("/riders/:id", async (req, res) => {
 // UPDATE rider
 app.put("/riders/:id", async (req, res) => {
     try {
-        const { id } = req.params;
+        const riderId = req.params.id;
         const { number, name } = req.body;
 
-        const updated = await pool.query(
-            "UPDATE rider SET number = $1, name = $2 WHERE rider_id = $3 RETURNING *",
-            [number, name, id]
+        if (!number || !name) {
+            return res.status(400).json({
+                error: "Number and name are required"
+            });
+        }
+
+        const [result] = await pool.query(
+            "UPDATE riders SET number = ?, name = ? WHERE id = ?",
+            [number, name, riderId]
         );
 
-        res.json(updated.rows[0]); // vrátime upraveného jazdca
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                error: "Rider not found"
+            });
+        }
+
+        res.json({
+            id: Number(riderId),
+            number,
+            name
+        });
     } catch (err) {
         console.error(err.message);
-        res.status(500).json({ error: "Server error" });
+        res.status(500).json({
+            error: "Server error"
+        });
     }
 });
 
 // DELETE rider
 app.delete("/riders/:id", async (req, res) => {
     try {
-        const { id } = req.params;
+        const riderId = req.params.id;
 
-        await pool.query(
-            "DELETE FROM rider WHERE rider_id = $1",
-            [id]
+        const [result] = await pool.query(
+            "DELETE FROM riders WHERE id = ?",
+            [riderId]
         );
 
-        res.json({ message: "Rider was deleted" });
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                error: "Rider not found"
+            });
+        }
+
+        res.json({
+            message: "Rider was deleted"
+        });
     } catch (err) {
         console.error(err.message);
-        res.status(500).json({ error: "Server error" });
+        res.status(500).json({
+            error: "Server error"
+        });
     }
 });
 
