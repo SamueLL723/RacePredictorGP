@@ -2,9 +2,37 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const pool = require('./db');
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
+const {use} = require("express/lib/application");
 
+app.use(cookieParser());
 app.use(cors());
 app.use(express.json());
+
+const authenticateToken = (req, res, next) => {
+  const token = req.cookies.token;
+
+  if (!token) {
+      return res.status(401).json({
+          error: "Not authenticated"
+      });
+  }
+
+  try {
+      const user = jwt.verify(
+          token,
+          process.env.JWT_SECRET
+      );
+      req.user = user;
+      next();
+  } catch (e) {
+    return res.status(401).json({
+        error: "Invalid or expired token"
+    });
+  }
+};
 
 // Routes
 
@@ -131,6 +159,126 @@ app.delete("/riders/:id", async (req, res) => {
             error: "Server error"
         });
     }
+});
+
+app.post("/register", async (req, res)=> {
+    try {
+        const { username, email, password } = req.body;
+
+        if (!username || !email || !password) {
+            return res.status(400).json({
+                error: "Username, email and password are required"
+            });
+        }
+
+        const [existingUsers] = await pool.query(
+            "SELECT * FROM users WHERE username = ? OR email = ?",
+            [username, email]
+        );
+
+        if (existingUsers.length > 0) {
+            return res.status(409).json({
+                error: "Username or email already exists"
+            });
+        }
+
+        const passwordHash = await bcrypt.hash(password, 10);
+
+        const [result] = await pool.query(
+            'INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)',
+            [username, email, passwordHash]
+        );
+
+        res.status(201).json({
+            id: result.insertId,
+            username,
+            email,
+            role: "user"
+        });
+    } catch (err) {
+        console.error(err.message);
+
+        res.status(500).json({
+           error: "Server error"
+        });
+    }
+});
+
+app.post("/login", async (req, res) => {
+    try {
+        const {email, password} = req.body;
+
+        if (!email || !password) {
+            return res.status(400).json({
+                error: "Email and password are required"
+            });
+        }
+
+        const [users] = await pool.query(
+            "SELECT * FROM users WHERE email = ?",
+            [email]
+        );
+
+        if (users.length === 0) {
+            return res.status(401).json({
+                error: "Invalid email or password"
+            });
+        }
+
+        const user = users[0];
+
+        const passwordMatches = await bcrypt.compare(
+          password,
+          user.password_hash
+        );
+
+        if (!passwordMatches) {
+            return res.status(401).json({
+                error: "Invalid email or password"
+            });
+        }
+
+        const token = jwt.sign(
+            {
+                id: user.id,
+                username: user.name,
+                role: user.role
+            },
+            process.env.JWT_SECRET,
+            {
+                expiresIn: "1h"
+            }
+        );
+
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
+            maxAge: 60 * 60 * 6000
+        });
+
+        res.json({
+            message: "Login succesful",
+            user: {
+                id: user.id,
+                username: user.username,
+                email: user.email,
+                role: user.role
+            }
+        });
+    } catch (err) {
+        console.error(err.message);
+
+        res.status(500).json({
+            error: "Server error"
+        });
+    }
+});
+
+app.get("/me", authenticateToken, (req, res) => {
+    res.json({
+        user: req.user
+    });
 });
 
 app.listen(5000, () => {

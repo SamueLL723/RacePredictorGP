@@ -1,8 +1,18 @@
-CREATE DATABASE RacePredictorGP;
+CREATE DATABASE IF NOT EXISTS racepredictorgp;
 
+USE racepredictorgp;
 
-CREATE TABLE rider (
-                       rider_id SERIAL PRIMARY KEY,
-                       number INT NOT NULL UNIQUE,
-                       name VARCHAR(255) NOT NULL,
+CREATE TABLE IF NOT EXISTS riders(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    number INT NOT NULL UNIQUE,
+    name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    role ENUM('user', 'admin') NOT NULL DEFAULT 'user',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
