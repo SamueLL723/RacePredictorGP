@@ -8,7 +8,10 @@ const cookieParser = require("cookie-parser");
 const {use} = require("express/lib/application");
 
 app.use(cookieParser());
-app.use(cors());
+app.use(cors({
+    origin: "http://localhost:63342",
+    credentials: true
+}));
 app.use(express.json());
 
 const authenticateToken = (req, res, next) => {
@@ -34,10 +37,19 @@ const authenticateToken = (req, res, next) => {
   }
 };
 
+const requireAdmin = (req, res, next) => {
+  if (req.user.role !== "admin") {
+      return res.status(403).json({
+          error: "Admin access required"
+      });
+  }
+  next();
+};
+
 // Routes
 
 // CREATE rider
-app.post("/riders", async (req, res) => {
+app.post("/riders",authenticateToken, requireAdmin , async (req, res) => {
     try {
         const { number, name } = req.body;
 
@@ -99,7 +111,7 @@ app.get("/riders/:id", async (req, res) => {
 });
 
 // UPDATE rider
-app.put("/riders/:id", async (req, res) => {
+app.put("/riders/:id",authenticateToken, requireAdmin, async (req, res) => {
     try {
         const riderId = req.params.id;
         const { number, name } = req.body;
@@ -135,7 +147,7 @@ app.put("/riders/:id", async (req, res) => {
 });
 
 // DELETE rider
-app.delete("/riders/:id", async (req, res) => {
+app.delete("/riders/:id", authenticateToken, requireAdmin, async (req, res) => {
     try {
         const riderId = req.params.id;
 
@@ -278,6 +290,18 @@ app.post("/login", async (req, res) => {
 app.get("/me", authenticateToken, (req, res) => {
     res.json({
         user: req.user
+    });
+});
+
+app.post("/logout", (req, res) => {
+    res.clearCookie("token", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax"
+    })
+
+    res.json({
+        message: "Logout successful"
     });
 });
 

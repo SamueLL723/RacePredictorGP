@@ -2,6 +2,13 @@ const API = "http://localhost:5000/riders";
 
 // LOAD ALL RIDERS
 async function loadRiders() {
+    const user = await getCurrentUser();
+    
+    const adminControls = document.getElementById("adminControls");
+    if (adminControls) {
+        adminControls.style.display = user?.role === "admin" ? "block" : "none";
+    }
+    
     const res = await fetch(API);
     const riders = await res.json();
 
@@ -15,8 +22,13 @@ async function loadRiders() {
                 <td>${r.number}</td>
                 <td>${r.name}</td>
                 <td>
-                    <button class="action-btn edit" onclick="editRider(${r.id}, ${r.number}, '${r.name}')">Edit</button>
-                    <button class="action-btn delete" onclick="deleteRider(${r.id})">Delete</button>
+                    ${
+                        user?.role === "admin"
+                            ? `
+                                <button class="action-btn edit" onclick="editRider(${r.id}, ${r.number}, '${r.name}')">Edit</button>
+                                <button class="action-btn delete" onclick="deleteRider(${r.id})">Delete</button>
+                            ` : ""
+                    }
                 </td>
             </tr>
         `;
@@ -31,6 +43,7 @@ async function addRider() {
     await fetch(API, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ number, name })
     });
 
@@ -47,6 +60,7 @@ async function editRider(id, oldNumber, oldName) {
     await fetch(`${API}/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ number, name })
     });
 
@@ -55,7 +69,7 @@ async function editRider(id, oldNumber, oldName) {
 
 // DELETE RIDER
 async function deleteRider(id) {
-    await fetch(`${API}/${id}`, { method: "DELETE" });
+    await fetch(`${API}/${id}`, { method: "DELETE", credentials: "include" });
     loadRiders();
 }
 
